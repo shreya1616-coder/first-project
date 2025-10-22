@@ -1,19 +1,619 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodAdda 🍔</title>
+
+  <!-- Bootstrap & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-green: #198754;
+      --light-green: #b8f7c6;
+      --dark-bg: #1a1a2e;
+      --accent-yellow: #f7a01a;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      background-color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h5 {
+      font-weight: 700;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar-brand {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--primary-green) !important;
+    }
+
+    .nav-link {
+      color: #222 !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-green) !important;
+    }
+
+    /* ===== HERO ===== */
+    .carousel-item {
+      height: 90vh;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-caption-side {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 60px;
+    }
+
+    .carousel-caption-side h2 {
+      color: var(--light-green);
+      font-size: 3rem;
+    }
+
+    /* ===== OFFERS ===== */
+    .offers-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #fff, #e8fff0);
+    }
+
+    .offer-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+      padding: 30px 20px;
+      transition: 0.3s;
+    }
+
+    .offer-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(25,135,84,0.2);
+    }
+
+    .offer-image-container {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .offer-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .offer-discount {
+      color: var(--primary-green);
+      font-weight: 600;
+    }
+
+    .order-button {
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
+
+    .order-button:hover {
+      background: #146c43;
+    }
+
+    /* ===== MENU ===== */
+    .menu-section {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .menu-heading {
+      font-size: 2.5rem;
+      color: var(--primary-green);
+      margin-bottom: 30px;
+    }
+
+    .filter-button {
+      background: #f1f1f1;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin: 5px;
+      transition: 0.3s;
+    }
+
+    .filter-button:hover,
+    .filter-button.active {
+      background: var(--primary-green);
+      color: #fff;
+    }
+
+    /* ===== FOOD CARDS ===== */
+    .cards-section {
+      background: #f9f9f9;
+      padding: 80px 40px;
+    }
+
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .card {
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* ===== ABOUT / FEANE ===== */
+    .feane-section {
+      background: var(--dark-bg);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .feane-section h1 {
+      font-family: 'Dancing Script', cursive;
+      color: var(--accent-yellow);
+      font-size: 3rem;
+    }
+
+    .burger-menu-item {
+      background: #2a2a44;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      color: #fff;
+      margin: 10px;
+    }
+
+    .burger-menu-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .price {
+      color: var(--accent-yellow);
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #e0f7fa, #fff);
+    }
+
+    .testimonials h2 {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: var(--primary-green);
+      position: relative;
+    }
+
+    .testimonials h2::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-yellow);
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    .carousel-inner {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .carousel-item {
+      display: flex !important;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .testimonial {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      width: 250px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .testimonial img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid var(--accent-yellow);
+      transition: transform 0.3s;
+    }
+
+    .testimonial p {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .testimonial h5 {
+      color: var(--primary-green);
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+
+    .testimonial:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Carousel controls */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-size: 100%, 100%;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+    }
+
+    .carousel-control-prev:hover .carousel-control-prev-icon,
+    .carousel-control-next:hover .carousel-control-next-icon {
+      transform: scale(1.2);
+    }
+
+    /* ===== ORDER FORM ===== */
+    .food-order-section {
+      position: relative;
+      background-image: url('pizza-5179939_1280.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 100px 20px;
+      color: white;
+    }
+
+    .food-order-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+    }
+
+    .order-container {
+      position: relative;
+      max-width: 650px;
+      margin: auto;
+      background: rgba(255,255,255,0.1);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+
+    .order-heading {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #00ff99;
+    }
+
+    .order-form input,
+    .order-form textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .place-order-btn {
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 50px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--primary-green);
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 10px;
+    }
+
+    .social-icons a:hover {
+      color: #d4ffd8;
+    }
+
+    @media (max-width: 992px) {
+      .carousel-item .testimonial {
+        width: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .carousel-item {
+        flex-direction: column;
+      }
+      .carousel-inner {
+        gap: 20px;
+      }
+      .testimonial {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Computer Guru Education
-    
-    </h1>
-    <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam, voluptatem velit accusamus, quidem et nostrum repellendus eveniet cupiditate doloribus numquam nobis labore iusto, dolorum aut nihil saepe fugit voluptatibus. Praesentium?
-    </p>
-    <button>Click Me</button>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">FoodAdda</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Offers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="close-up-of-a-juicy-burger-with-fries-it-look-very-delicious-big-sandwich-hamburger-with-juicy-beef-burger-cheese-tomato-and-red-onion-photo.jpg" alt="Burger">
+        <div class="carousel-caption-side">
+          <h2>Welcome to FoodAdda 🍔</h2>
+          <p>Experience freshly cooked meals, handcrafted with love.</p>
+          <button class="btn btn-success mt-3">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OFFERS ===== -->
+  <section class="offers-section">
+    <div class="offer-card">
+      <div class="offer-image-container"><img src="o1.jpg" alt=""></div>
+      <h2>Tasty Thursdays</h2>
+      <p class="offer-discount">20% OFF</p>
+      <button class="order-button">Order Now 🛒</button>
+    </div>
+    <div class="offer-card">
+      <div class="offer-image-container"><img src="o2.jpg" alt=""></div>
+      <h2>Pizza Days</h2>
+      <p class="offer-discount">15% OFF</p>
+      <button class="order-button">Order Now 🛒</button>
+    </div>
+  </section>
+
+  <!-- ===== CATEGORIES ===== -->
+  <section class="categories-section">
+        <div class="content-header">
+            <p class="featured-tag">FEATURED</p>
+            <h1>Popular Categories</h1>
+            <p class="subtitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+            </p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card main-dish">
+                <div class="category-info">
+                    <h2>Main Dish</h2>
+                    <a href="#" class="discover-btn">Discover recipes</a>
+                </div>
+            </div>
+
+            <div class="category-card appetizers">
+                <div class="category-info">
+                    <h2>Appetizers</h2>
+                    <a href="#" class="discover-btn">Discover recipes</a>
+                </div>
+            </div>
+
+            <div class="category-card drink-recipes">
+                <div class="category-info">
+                    <h2>Drink Recipes</h2>
+                    <a href="#" class="discover-btn">Discover recipes</a>
+                </div>
+            </div>
+             <div class="category-card breakfast">
+                <div class="category-info">
+                    <h2>Breakfast</h2>
+                    <a href="#" class="discover-btn">Discover recipes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- ===== MENU ===== -->
+  <section class="menu-section">
+    <h1 class="menu-heading">Our Menu</h1>
+    <div>
+      <button class="filter-button active">All</button>
+      <button class="filter-button">Burger</button>
+      <button class="filter-button">Pizza</button>
+      <button class="filter-button">Pasta</button>
+      <button class="filter-button">Fries</button>
+    </div>
+  </section>
+
+  <!-- ===== FOOD CARDS ===== -->
+  <section class="cards-section">
+    <div class="cards-container">
+      <div class="card"><img src="381504.jpg" alt="Burger"><div class="card-body"><h5>Delicious Burger</h5><p>Juicy, cheesy, and freshly made.</p><a href="#" class="btn btn-success">Order Now</a></div></div>
+      <div class="card"><img src="pizza-5179939_1280.jpg" alt="Pizza"><div class="card-body"><h5>Cheesy Pizza</h5><p>Hot, cheesy, and loaded with toppings.</p><a href="#" class="btn btn-success">Order Now</a></div></div>
+      <div class="card"><img src="creamy-penne-pasta-recipe_1-799x1024.jpg" alt="Pasta"><div class="card-body"><h5>Creamy Penne</h5><p>Soft penne coated in creamy sauce.</p><a href="#" class="btn btn-success">Order Now</a></div></div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / FEANE ===== -->
+  <section class="feane-section">
+    <h1>We Are FoodAdda</h1>
+    <p>There are many variations of delicious meals, but none like ours. Crafted with care, served with passion!</p>
+
+    <div class="burger-menu-item"><img src="burger (1).jpg" alt=""><div><h3>Spicy Veggie Delight</h3><p>Black bean patty, avocado, spicy mayo.</p><span class="price">$10.50</span></div></div>
+    <div class="burger-menu-item"><img src="Grilled-Chicken-Sandwich.jpg" alt=""><div><h3>Grilled Chicken Sandwich</h3><p>Marinated chicken, cheddar & pickles.</p><span class="price">$13.75</span></div></div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials">
+  <h2 class="text-center mb-5">What Our Customers Say</h2>
+  
+  <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <div class="d-flex justify-content-center gap-4">
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=1" class="mb-3" alt="Emily">
+            <p>"The best burgers in town!"</p>
+            <h5>Emily Johnson</h5>
+          </div>
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=2" class="mb-3" alt="Michael">
+            <p>"Loved the pizza, so cheesy!"</p>
+            <h5>Michael Smith</h5>
+          </div>
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=3" class="mb-3" alt="Sophia">
+            <p>"Always fresh and tasty."</p>
+            <h5>Sophia Williams</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="d-flex justify-content-center gap-4">
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=4" class="mb-3" alt="Liam">
+            <p>"Fast delivery and amazing taste!"</p>
+            <h5>Liam Brown</h5>
+          </div>
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=5" class="mb-3" alt="Olivia">
+            <p>"Highly recommend the burgers here."</p>
+            <h5>Olivia Davis</h5>
+          </div>
+          <div class="testimonial text-center">
+            <img src="https://i.pravatar.cc/100?img=6" class="mb-3" alt="Noah">
+            <p>"Delicious pizza, very fresh ingredients."</p>
+            <h5>Noah Wilson</h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+     <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+  <!-- ===== ORDER FORM ===== -->
+  <section class="food-order-section">
+    <div class="order-container">
+      <h1 class="order-heading">Order Your Favorite Food 🍔</h1>
+      <form class="order-form">
+        <input type="text" placeholder="Full Name" required>
+        <input type="tel" placeholder="Contact Number" required>
+        <input type="text" placeholder="Food Item" required>
+        <input type="number" placeholder="Quantity" required>
+        <textarea rows="3" placeholder="Delivery Address" required></textarea>
+        <button type="submit" class="place-order-btn">Place Order 🚀</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <h5>FoodAdda 🍔</h5>
+    <p>Your favorite food destination.</p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+      <a href="#"><i class="bi bi-youtube"></i></a>
+    </div>
+    <p class="mt-3">&copy; 2025 FoodAdda. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
-
 </html>
